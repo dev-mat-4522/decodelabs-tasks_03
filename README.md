@@ -1,43 +1,43 @@
 # Project 3: ERC-20 Token Wallet & Value Transfer
-**Batch: 2026 | Powered by DecodeLabs**[cite: 3]
+**Batch: 2026 | Powered by DecodeLabs**
 
 ## 📌 Project Overview
-This application shifts focus to the "Nervous System of DeFi"[cite: 3]. Moving digital assets is not just a simple database update; it requires deterministic on-chain state updates and airtight logic[cite: 3]. By standardizing assets through the ERC-20 blueprint, we ensure seamless interoperability across the ecosystem[cite: 3]. This Python simulation models both the frontend input sanitization and the strict backend ledger manipulation.
+This application shifts focus to the "Nervous System of DeFi. Moving digital assets is not just a simple database update; it requires deterministic on-chain state updates and airtight logic. By standardizing assets through the ERC-20 blueprint, we ensure seamless interoperability across the ecosystem. This Python simulation models both the frontend input sanitization and the strict backend ledger manipulation.
 
 ---
 
 ## 🏗️ Banking Logic: The IPO Architecture
-A secure token wallet is built on the Input-Process-Output (IPO) framework[cite: 3].
+A secure token wallet is built on the Input-Process-Output (IPO) framework.
 
 ### 1. The INPUT Phase (Secure Data Acquisition)
-Garbage in, garbage out[cite: 3]. If input is malformed, processing will fail.
-* **Target Address Validation:** We utilize regex validation for the `0x` format to prevent copy-paste errors and malicious redirection[cite: 3].
-* **Transfer Amount Sanity:** We check for non-negative values to prevent UI-level logic errors before they reach the blockchain[cite: 3].
+Garbage in, garbage out. If input is malformed, processing will fail.
+* **Target Address Validation:** We utilize regex validation for the `0x` format to prevent copy-paste errors and malicious redirection.
+* **Transfer Amount Sanity:** We check for non-negative values to prevent UI-level logic errors before they reach the blockchain.
 
 ### 2. The PROCESS Phase (The State Manipulation Engine)
-The deterministic core applies strict, sequential financial logic to update the private ledger (BalancesMapper)[cite: 3].
-* **Authorization / Overdraft Prevention:** The script enforces `require(balance >= amount)` to explicitly stop the spending of non-existent funds[cite: 3].
-* **Underflow Protection:** The logic utilizes built-in math checks to prevent numbers from wrapping around and creating infinite money[cite: 3].
-* **State Change:** We subtract the exact amount from the sender and add it to the recipient, ensuring encapsulated state variables apply the financial rules without exception[cite: 3].
+The deterministic core applies strict, sequential financial logic to update the private ledger (BalancesMapper).
+* **Authorization / Overdraft Prevention:** The script enforces `require(balance >= amount)` to explicitly stop the spending of non-existent funds.
+* **Underflow Protection:** The logic utilizes built-in math checks to prevent numbers from wrapping around and creating infinite money.
+* **State Change:** We subtract the exact amount from the sender and add it to the recipient, ensuring encapsulated state variables apply the financial rules without exception.
 
 ### 3. The OUTPUT Phase (Data Integrity)
-A transaction completes by ensuring ecosystem synchronization[cite: 3].
-* The system executes a permanent state change on the internal ledger[cite: 3].
-* An event (`Transfer(from, to, value)`) is emitted, which is crucial for block explorers, indexers, and off-chain analytics[cite: 3].
+A transaction completes by ensuring ecosystem synchronization.
+* The system executes a permanent state change on the internal ledger.
+* An event (`Transfer(from, to, value)`) is emitted, which is crucial for block explorers, indexers, and off-chain analytics.
 
 ---
 
 ## ⚠️ The Double-Precision Paradox
-This project specifically addresses the scale mismatch between frontends and the blockchain ledger[cite: 3].
+This project specifically addresses the scale mismatch between frontends and the blockchain ledger.
 
-* **The Trap:** JavaScript natively uses 64-bit IEEE 754 double-precision floating-point numbers, which lose precision beyond ~15 digits (53 bits)[cite: 3].
-* **The Danger:** Naively converting a 256-bit EVM balance into a native JS Number results in rounding errors, which translates to a catastrophic loss of institutional funds[cite: 3]. 
+* **The Trap:** JavaScript natively uses 64-bit IEEE 754 double-precision floating-point numbers, which lose precision beyond ~15 digits (53 bits).
+* **The Danger:** Naively converting a 256-bit EVM balance into a native JS Number results in rounding errors, which translates to a catastrophic loss of institutional funds. 
 
 To convert backend EVM integers for a UI, the formula is:
-$UserReadable = \frac{InternalInteger}{10^{decimals}}$[cite: 3]
+$UserReadable = \frac{InternalInteger}{10^{decimals}}$
 
 ### The BigNumber Solution
-To bypass floating-point limitations entirely, standard ERC-20 implementations utilize fixed-point arithmetic[cite: 3]. In this Python implementation, we simulate the `ethers.js` BigNumber approach by converting user string inputs directly into massive raw integers (scaling them by $10^{18}$), preventing fractional data loss entirely[cite: 3].
+To bypass floating-point limitations entirely, standard ERC-20 implementations utilize fixed-point arithmetic. In this Python implementation, we simulate the `ethers.js` BigNumber approach by converting user string inputs directly into massive raw integers (scaling them by $10^{18}$), preventing fractional data loss entirely.
 
 
 ### OUTPUT
